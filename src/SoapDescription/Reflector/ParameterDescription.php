@@ -82,7 +82,7 @@ class ParameterDescription
      */
     public function isOptional($flag = null): bool
     {
-        if ( $flag !== null ) {
+        if ($flag !== null) {
             $this->optional = (bool)$flag;
         }
         return $this->optional;

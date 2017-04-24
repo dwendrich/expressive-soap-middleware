@@ -2,7 +2,6 @@
 
 namespace SoapMiddleware\SoapDescription\Action;
 
-
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -82,7 +81,7 @@ class SoapDescription implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {
-        switch ( $request->getMethod() ) {
+        switch ($request->getMethod()) {
             case 'GET':
                 return $this->createDescriptionResponse();
 
@@ -97,7 +96,7 @@ class SoapDescription implements MiddlewareInterface
     private function handleInvocation(ServerRequestInterface $request)
     {
         // if invocation is not allowed return http status 403
-        if ( !$this->enableInvocation ) {
+        if (!$this->enableInvocation) {
             $response = new Response();
             return $response->withStatus(403);  // http status forbidden
         }
@@ -110,7 +109,7 @@ class SoapDescription implements MiddlewareInterface
 
         try {
             call_user_func_array([$this->client, $method], $params);
-        } catch ( \SoapFault $f ) {
+        } catch (\SoapFault $f) {
             // do nothing as soap fault will be presented as last response anyway
         }
 
@@ -119,7 +118,7 @@ class SoapDescription implements MiddlewareInterface
          * renderer instance is available we return an
          * xml response object
          */
-        if ( $xmlOut || $this->renderer === null ) {
+        if ($xmlOut || $this->renderer === null) {
             $xml = $this->client->getLastResponse();
 
             // TODO: handle empty xml string in case the method return type is void
@@ -145,7 +144,7 @@ class SoapDescription implements MiddlewareInterface
     private function createDescriptionResponse()
     {
         // fallback, in case no renderer instance is present
-        if ( $this->renderer === null ) {
+        if ($this->renderer === null) {
             return new Response\TextResponse(
                 'No template renderer instance available to create the service description.',
                 200
@@ -163,5 +162,4 @@ class SoapDescription implements MiddlewareInterface
             $this->renderer->render($this->templateService, $data)
         );
     }
-
 }

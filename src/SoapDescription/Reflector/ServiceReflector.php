@@ -13,7 +13,9 @@ class ServiceReflector implements ServiceReflectorInterface
      */
     protected $reflection;
 
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
      * @return \ReflectionMethod[]
@@ -22,9 +24,9 @@ class ServiceReflector implements ServiceReflectorInterface
     {
         $methods = [];
 
-        foreach ( $this->reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method ) {
+        foreach ($this->reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
             // exclude constructor, destructor, abstract and magic methods
-            if ( $method->isConstructor() ||
+            if ($method->isConstructor() ||
                 $method->isDestructor() ||
                 $method->isAbstract() ||
                 fnmatch('__*', $method->getName())
@@ -50,12 +52,12 @@ class ServiceReflector implements ServiceReflectorInterface
         $serviceDescription->setFullyQualifiedClassName($this->reflection->getName());
         $serviceDescription->setFileName($this->reflection->getFileName());
 
-        if ( !empty($this->reflection->getDocComment()) ) {
+        if (!empty($this->reflection->getDocComment())) {
             $scanner = new DocBlockReflection($this->reflection->getDocComment());
             $serviceDescription->setClassDescription($scanner->getLongDescription());
         }
 
-        foreach ( $this->getMethodDescriptions() as $methodDescription ) {
+        foreach ($this->getMethodDescriptions() as $methodDescription) {
             $serviceDescription->addMethodDescription($methodDescription);
         }
 
@@ -72,17 +74,17 @@ class ServiceReflector implements ServiceReflectorInterface
     {
         $params = [];
 
-        foreach ( $method->getParameters() as $parameter ) {
+        foreach ($method->getParameters() as $parameter) {
             /** @var \ReflectionParameter $parameter */
             $parameterDescription = new ParameterDescription();
             $parameterDescription->setName($parameter->getName());
 
-            if ( $parameter->hasType() ) {
+            if ($parameter->hasType()) {
                 $parameterDescription->setType($parameter->getType());
             }
 
             $parameterDescription->isOptional($parameter->isOptional());
-            if ( $parameter->isOptional() ) {
+            if ($parameter->isOptional()) {
                 $parameterDescription->setDefaultValue(
                     $parameter->allowsNull()
                         ? 'null'
@@ -90,8 +92,8 @@ class ServiceReflector implements ServiceReflectorInterface
                 );
             }
 
-            foreach ( $paramTags as $tag ) {
-                if ( $tag->getVariableName() == '$' . $parameter->getName() ) {
+            foreach ($paramTags as $tag) {
+                if ($tag->getVariableName() == '$' . $parameter->getName()) {
                     $parameterDescription->setDescription($tag->getDescription());
                     break;
                 }
@@ -110,7 +112,7 @@ class ServiceReflector implements ServiceReflectorInterface
     {
         $pm = [];
 
-        foreach ( $this->getPublicMethods() as $method ) {
+        foreach ($this->getPublicMethods() as $method) {
             $methodDescription = new MethodDescription();
             $methodDescription->setName($method->getName());
 
@@ -120,7 +122,7 @@ class ServiceReflector implements ServiceReflectorInterface
              * Method description and return type description depend
              * on method doc-block comment.
              */
-            if ( !empty($method->getDocComment()) ) {
+            if (!empty($method->getDocComment())) {
                 $scanner = new DocBlockReflection($method->getDocComment());
 
                 // set method description
@@ -128,8 +130,8 @@ class ServiceReflector implements ServiceReflectorInterface
 
                 // parse return type description from tag description
                 $docBlockParameterTags = $scanner->getTags();
-                foreach ( $docBlockParameterTags as $tag ) {
-                    if ( $tag instanceof Tag\ReturnTag ) {
+                foreach ($docBlockParameterTags as $tag) {
+                    if ($tag instanceof Tag\ReturnTag) {
                         $methodDescription->setReturnTypeDescription(
                             $tag->getDescription()
                         );
@@ -145,7 +147,7 @@ class ServiceReflector implements ServiceReflectorInterface
                     : 'void'
             );
 
-            foreach ( $this->getParameterDescription($method, $docBlockParameterTags) as $parameterDescription ) {
+            foreach ($this->getParameterDescription($method, $docBlockParameterTags) as $parameterDescription) {
                 $methodDescription->addParameter($parameterDescription);
             }
 

@@ -60,7 +60,7 @@ class SoapController implements MiddlewareInterface
 
     private function generateResponse(ServerRequestInterface $request)
     {
-        switch ( $request->getMethod() ) {
+        switch ($request->getMethod()) {
             case 'GET':
                 /*
                  * In case of get request method the webservice

@@ -61,7 +61,7 @@ class SoapDescriptionAbstractFactory implements AbstractFactoryInterface
         $serviceClass = $config['class'];
 
         $serviceRouteKey = isset($config['service_route']) ? $config['service_route'] : null;
-        if ( empty($serviceRouteKey) ) {
+        if (empty($serviceRouteKey)) {
             throw new \InvalidArgumentException("You have to provide a 'service_route' parameter to determine the webservice endpoint.");
         }
 

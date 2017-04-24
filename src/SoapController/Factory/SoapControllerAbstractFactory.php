@@ -75,7 +75,7 @@ class SoapControllerAbstractFactory implements AbstractFactoryInterface
          * if the container knows about the class and how to instantiate
          * it. Otherwise set the class directly in the server.
          */
-        if ( $container->has($serviceClass) ) {
+        if ($container->has($serviceClass)) {
             $soapServer->setObject($container->get($serviceClass));
         } else {
             $soapServer->setClass($serviceClass);
