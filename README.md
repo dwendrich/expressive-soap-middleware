@@ -44,6 +44,6 @@ service based on the public methods implemented in `MyServiceClass`.
 
 Calls to your soap service are handled via http request method `POST`.
 
-## Documenation
+## Documentation
 - [Soap controller component](doc/01-soap-controller.md)
 - [Soap description component](doc/02-soap-description.md)
