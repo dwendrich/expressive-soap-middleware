@@ -1,0 +1,107 @@
+<?php
+    /** @var \SoapMiddleware\SoapDescription\Reflector\MethodDescription $method */
+?>
+<div class="panel panel-info">
+    <div class="panel-heading" role="tab">
+        <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#method-list" href="#collapse-method-<?php echo $method->getName(); ?>"
+               aria-expanded="true"><?php
+                echo sprintf(
+                    '<strong><span class="filter">%s()</span></strong>: %s',
+                    $this->escapeHtml($method->getName()),
+                    $this->escapeHtml($method->getReturnType())
+                );
+            ?></a>
+        </h4>
+    </div>
+    <div id="collapse-method-<?php echo $method->getName(); ?>" class="panel-collapse collapse" role="tabpanel">
+        <div class="panel-body method-description-body">
+            <br>
+            <pre><?php
+                $paramSignature = '';
+
+                if ( !empty($method->getParameter()) ) {
+                    $params = [];
+                    foreach ( $method->getParameter() as $parameter ) {
+                        /** @var \SoapMiddleware\SoapDescription\Reflector\ParameterDescription $parameter */
+                        $params[] = sprintf(
+                            "%s%s%s",
+                            !empty($parameter->getType()) ? $parameter->getType() . ' ' : '',
+                            $parameter->getName(),
+                            $parameter->isOptional() ? ' = ' . $parameter->getDefaultValue() : ''
+                        );
+                    }
+                    $paramSignature = implode(', ', $params);
+                }
+
+                echo sprintf(
+                    '%s %s (%s)',
+                    $this->escapeHtml($method->getReturnType()),
+                    $this->escapeHtml($method->getName()),
+                    $this->escapeHtml(
+                        !empty($paramSignature)
+                            ? ' ' . $paramSignature . ' '
+                            : ''
+                    )
+                );
+            ?></pre>
+
+            <p><?php echo $this->escapeHtml($method->getDescription()); ?>
+
+            <?php if ( !empty($method->getParameter()) ) : ?>
+                <h3 class="text-info">Parameter</h3>
+                <dl>
+                <?php foreach ( $method->getParameter() as $parameter ) : ?>
+                    <dt><?php echo $this->escapeHtml($parameter->getName()); ?></dt>
+                    <dd><?php echo $this->escapeHtml($parameter->getDescription()); ?></dd>
+                <?php endforeach; ?>
+                </dl>
+            <?php endif; ?>
+
+            <?php if ( !empty($method->getReturnTypeDescription()) ) : ?>
+                <h3 class="text-info">Return Value</h3>
+                <p><?php echo $this->escapeHtml($method->getReturnTypeDescription()); ?></p>
+            <?php endif; ?>
+        </div>
+
+        <?php if ( $this->invoke ) : ?>
+        <div class="panel-footer">
+            <p class="text-info">Test the operation using the HTTP POST protocol</p>
+            <form action="<?php echo $this->url(); ?>" method="POST">
+                <input type="hidden" name="method" value="<?php echo $method->getName(); ?>">
+                <?php if ( !empty($method->getParameter()) ) : ?>
+                    <table class="table table-condensed table-bordered parameter-input">
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Value</th>
+                        </tr>
+                        <?php foreach ( $method->getParameter() as $parameter ) : ?>
+                        <tr>
+                            <td>
+                                <label for="<?php
+                                $paramId = sprintf(
+                                    "%s-%s",
+                                    $method->getName(),
+                                    $parameter->getName()
+                                );
+                                echo $paramId;
+                                ?>"><?php echo $this->escapeHtml($parameter->getName()); ?></label>
+                            </td>
+                            <td><input type="text" id="<?php echo $paramId; ?>" name="params[]" class="form-control" placeholder="<?php echo $this->escapeHtml($parameter->getType()); ?>"></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+                <div class="checkbox">
+                    <label>
+                        <input name="output_xml" type="checkbox" value="1" checked> Output raw xml response
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-danger">Invoke</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+            </form>
+        </div>
+        <?php endif; ?>
+
+    </div>
+</div>

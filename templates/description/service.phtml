@@ -1,0 +1,94 @@
+<?php
+    /** @var \SoapMiddleware\SoapDescription\Reflector\ServiceDescription $service */
+    $service = $this->service;
+
+    $this->headTitle($service->getClassName());
+    $this->headTitle('Description');
+
+    $this->placeholder('classname')->set($service->getFullyQualifiedClassName());
+    $this->placeholder('filename')->set($service->getFileName());
+?>
+
+<div class="jumbotron">
+    <h1><?php echo $this->escapeHtml($service->getClassName()); ?></h1>
+    <?php if ( !empty($service->getClassDescription()) ) : ?>
+    <?php echo $this->escapeHtml($service->getClassDescription()); ?>
+    <?php endif; ?>
+</div>
+
+<h2>WSDL</h2>
+<p><?php
+    $msg = 'Click on the link to open the %s in a new browser tab or window.';
+    $link = sprintf(
+        '<a href="%s" target="_blank">wsdl <i class="fa fa-external-link"></i></a>',
+        $this->wsdl_uri
+    );
+    echo sprintf(
+        $this->escapeHtml($msg), $link
+    );
+?></p>
+
+<?php if ( !empty($service->getMethodDescriptionCollection()) ) : ?>
+<h2>Available service methods</h2>
+<p>Click on the method name to show or hide details.</p>
+
+<?php if ( count($service->getMethodDescriptionCollection()) > 2 ) : ?>
+<form id="method-filter" action="#">
+    <p class="input-group">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        <input type="text" class="form-control method-filter-input" placeholder="Search for method name">
+    </p>
+</form>
+<?php
+    $this->inlineScript()->captureStart();
+    echo <<<JS_FILTER_EXTENSION
+$(document).ready(function() {
+    (function ($) {
+        jQuery.expr[':'].Contains = function(a,i,m){
+            return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
+        };
+
+        $.fn.filterMethods = function(options) {
+            var settings = $.extend({
+                inputSelector: '.method-filter-input',
+                filterElement: 'div.panel'
+            }, options);
+
+            var list = $(this);
+            var input = $(settings.inputSelector);
+
+            input
+                .change( function() {
+                    var filter = $(this).val();
+                    if ( filter ) {
+                        list.find("span.filter:not(:Contains(" + filter + "))").parents(settings.filterElement).slideUp();
+                        list.find("span.filter:Contains(" + filter + ")").parents(settings.filterElement).slideDown();
+                    } else {
+                        list.find(settings.filterElement).slideDown();
+                    }
+                })
+                .keyup( function() {
+                    $(this).change();
+                });
+        };
+    }(jQuery));
+
+    // attach filter extension to method list
+    $('#method-list').filterMethods();
+});
+JS_FILTER_EXTENSION;
+    $this->inlineScript()->captureEnd();
+?>
+<?php endif; ?>
+
+<div class="panel-group" id="method-list" role="tablist">
+    <?php
+        foreach ( $service->getMethodDescriptionCollection() as $method ) {
+            echo $this->partial($this->template_method, [
+                'invoke' => $this->enable_invocation,
+                'method' => $method
+            ]);
+        }
+    ?>
+</div>
+<?php endif; ?>

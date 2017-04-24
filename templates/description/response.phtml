@@ -1,0 +1,51 @@
+<?php
+$this->headTitle($this->method);
+$this->headTitle('Response');
+?>
+<h2><?php echo $this->escapeHtml($this->protocol); ?></h2>
+
+<ul>
+    <li><a href="#request">Request</a></li>
+    <li><a href="#response">Response</a></li>
+    <li><a href="<?php echo $this->url(); ?>">Back to service description</a></li>
+</ul>
+
+<h3 id="request">Request</h3>
+<pre><?php
+    $doc = new DOMDocument();
+    $doc->loadXML($this->request_xml);
+    $doc->preserveWhiteSpace = false;
+    $doc->formatOutput = true;
+    $formattedXml = $doc->saveXML();
+    unset($doc);
+    echo sprintf(
+        "%s\n\n%s",
+        trim($this->request_headers),
+        $this->escapeHtml($formattedXml)
+    );
+?></pre>
+<div class="text-right">
+    <small><a href="#page-body-top">back to top</a></small>
+</div>
+
+<h3 id="response">Response</h3>
+<pre><?php
+    if ( !empty($this->response_xml) ) {
+        $doc = new DOMDocument();
+        $doc->loadXML($this->response_xml);
+        $doc->preserveWhiteSpace = false;
+        $doc->formatOutput = true;
+        $formattedXml = $doc->saveXML();
+        unset($doc);
+        echo sprintf(
+            "%s\n\n%s",
+            trim($this->response_headers),
+            $this->escapeHtml($formattedXml)
+        );
+    } else {
+        echo 'The request received no response';
+    }
+?></pre>
+<div class="text-right">
+    <small><a href="#page-body-top">back to top</a></small>
+</div>
