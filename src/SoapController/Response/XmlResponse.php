@@ -8,6 +8,12 @@ use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\InjectContentTypeTrait;
 use Zend\Diactoros\Stream;
 
+/**
+ * Class XmlResponse
+ *
+ * @package SoapMiddleware\SoapController\Response
+ * @author Daniel Wendrich <daniel.wendrich@gmail.com>
+ */
 class XmlResponse extends Response
 {
     use InjectContentTypeTrait;

@@ -13,6 +13,12 @@ use Zend\Soap\Client;
 use SoapMiddleware\SoapController\Response\XmlResponse;
 use SoapMiddleware\SoapDescription\Reflector\ServiceDescription;
 
+/**
+ * Class SoapDescription
+ *
+ * @package SoapMiddleware\SoapDescription\Action
+ * @author Daniel Wendrich <daniel.wendrich@gmail.com>
+ */
 class SoapDescription implements MiddlewareInterface
 {
     /**

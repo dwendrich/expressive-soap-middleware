@@ -4,7 +4,7 @@ namespace SoapMiddleware\SoapDescription\Reflector;
 use SoapMiddleware\SoapDescription\Reflector\MethodDescription;
 
 /**
- * Interface ServiceDescriptionInterface
+ * ServiceDescription
  *
  * @package SoapMiddleware\SoapDescription\Reflector
  * @author Daniel Wendrich <daniel.wendrich@gmail.com>

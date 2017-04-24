@@ -3,6 +3,12 @@ namespace SoapMiddleware\SoapDescription\Reflector;
 
 use SoapMiddleware\SoapDescription\Reflector\ParameterDescription;
 
+/**
+ * Class MethodDescription
+ *
+ * @package SoapMiddleware\SoapDescription\Reflector
+ * @author Daniel Wendrich <daniel.wendrich@gmail.com>
+ */
 class MethodDescription
 {
     /**

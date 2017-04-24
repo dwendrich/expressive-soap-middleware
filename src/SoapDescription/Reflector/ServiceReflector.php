@@ -6,6 +6,12 @@ use Zend\Code\Reflection\DocBlock\Tag;
 use SoapMiddleware\SoapDescription\Reflector\ServiceReflectorInterface;
 use SoapMiddleware\SoapDescription\Reflector\ServiceDescription;
 
+/**
+ * Class ServiceReflector
+ *
+ * @package SoapMiddleware\SoapDescription\Reflector
+ * @author Daniel Wendrich <daniel.wendrich@gmail.com>
+ */
 class ServiceReflector implements ServiceReflectorInterface
 {
     /**

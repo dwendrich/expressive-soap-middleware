@@ -10,6 +10,8 @@ use SoapMiddleware\SoapDescription\Reflector\ServiceReflectorInterface;
 /**
  * The configuration provider for the SoapMiddleware module
  *
+ * @package SoapMiddleware
+ * @author Daniel Wendrich <daniel.wendrich@gmail.com>
  * @see https://docs.zendframework.com/zend-component-installer/
  */
 class ConfigProvider
