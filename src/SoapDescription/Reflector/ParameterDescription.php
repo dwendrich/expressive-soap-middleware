@@ -1,6 +1,12 @@
 <?php declare(strict_types=1);
 namespace SoapMiddleware\SoapDescription\Reflector;
 
+/**
+ * Class ParameterDescription
+ *
+ * @package SoapMiddleware\SoapDescription\Reflector
+ * @author Daniel Wendrich <daniel.wendrich@gmail.com>
+ */
 class ParameterDescription
 {
     /**

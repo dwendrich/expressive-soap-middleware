@@ -10,6 +10,12 @@ use Zend\Soap\AutoDiscover as WsdlGenerator;
 use Zend\Soap\Server as SoapServer;
 use SoapMiddleware\SoapController\Response\XmlResponse;
 
+/**
+ * Class SoapController
+ *
+ * @package SoapMiddleware\SoapController
+ * @author Daniel Wendrich <daniel.wendrich@gmail.com>
+ */
 class SoapController implements MiddlewareInterface
 {
     /**

@@ -13,6 +13,12 @@ use Zend\Soap\Client;
 use SoapMiddleware\SoapDescription\Action\SoapDescription;
 use SoapMiddleware\SoapDescription\Reflector\ServiceReflectorInterface;
 
+/**
+ * Class SoapDescriptionAbstractFactory
+ *
+ * @package SoapMiddleware\SoapDescription\Factory
+ * @author Daniel Wendrich <daniel.wendrich@gmail.com>
+ */
 class SoapDescriptionAbstractFactory implements AbstractFactoryInterface
 {
     /**
@@ -62,7 +68,9 @@ class SoapDescriptionAbstractFactory implements AbstractFactoryInterface
 
         $serviceRouteKey = isset($config['service_route']) ? $config['service_route'] : null;
         if (empty($serviceRouteKey)) {
-            throw new \InvalidArgumentException("You have to provide a 'service_route' parameter to determine the webservice endpoint.");
+            throw new \InvalidArgumentException(
+                "You have to provide a 'service_route' parameter to determine the webservice endpoint."
+            );
         }
 
         $helper = $container->get(UrlHelper::class);

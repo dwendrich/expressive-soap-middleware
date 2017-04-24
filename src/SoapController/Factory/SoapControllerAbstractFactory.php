@@ -12,6 +12,12 @@ use Zend\Soap\Server;
 use Zend\Soap\AutoDiscover;
 use SoapMiddleware\SoapController\SoapController;
 
+/**
+ * Class SoapControllerAbstractFactory
+ *
+ * @package SoapMiddleware\SoapController\Factory
+ * @author Daniel Wendrich <daniel.wendrich@gmail.com>
+ */
 class SoapControllerAbstractFactory implements AbstractFactoryInterface
 {
     /**
