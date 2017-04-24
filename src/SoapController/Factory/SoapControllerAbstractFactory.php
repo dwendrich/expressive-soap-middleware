@@ -12,6 +12,12 @@ use Zend\Soap\Server;
 use Zend\Soap\AutoDiscover;
 use SoapMiddleware\SoapController\SoapController;
 
+/**
+ * Class SoapControllerAbstractFactory
+ *
+ * @package SoapMiddleware\SoapController\Factory
+ * @author Daniel Wendrich <daniel.wendrich@gmail.com>
+ */
 class SoapControllerAbstractFactory implements AbstractFactoryInterface
 {
     /**
@@ -75,7 +81,7 @@ class SoapControllerAbstractFactory implements AbstractFactoryInterface
          * if the container knows about the class and how to instantiate
          * it. Otherwise set the class directly in the server.
          */
-        if ( $container->has($serviceClass) ) {
+        if ($container->has($serviceClass)) {
             $soapServer->setObject($container->get($serviceClass));
         } else {
             $soapServer->setClass($serviceClass);

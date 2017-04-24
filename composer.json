@@ -1,6 +1,6 @@
 {
     "name": "dwendrich/expressive-soap-middleware",
-    "description": "Soap middleware for handling webservice requests based on zend expressive 2.0.",
+    "description": "Middleware for handling soap webservice requests based on zend expressive 2.0.",
     "type": "library",
     "license": "MIT",
     "authors": [
