@@ -1,0 +1,45 @@
+{
+    "name": "dwendrich/expressive-soap-middleware",
+    "description": "Soap middleware for handling webservice requests based on zend expressive 2.0.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Wendrich",
+            "email": "daniel.wendrich@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SoapMiddleware\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SoapMiddlewareTest\\": "test/"
+        }
+    },
+    "require": {
+        "php": "^7.0",
+        "zendframework/zend-expressive": "^2.0.2",
+        "zendframework/zend-expressive-helpers": "^4.0",
+        "zendframework/zend-soap": "^2.6",
+        "zendframework/zend-stdlib": "^3.1",
+        "zendframework/zend-servicemanager": "^3.3"
+    },
+    "require-dev": {
+        "filp/whoops": "^2.1.7",
+        "phpunit/phpunit": "^6.0.8",
+        "squizlabs/php_codesniffer": "^2.8.1"
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "test": "phpunit",
+        "test-coverage": "phpunit --color=never --coverage-text"
+    }
+}

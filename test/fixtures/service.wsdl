@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://ws.expressive2.local/demo/v1/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="DemoService"
+             targetNamespace="http://ws.expressive2.local/demo/v1/">
+    <types>
+        <xsd:schema targetNamespace="http://ws.expressive2.local/demo/v1/"/>
+    </types>
+    <portType name="DemoServicePort">
+        <operation name="getRandomInt">
+            <documentation>Create a random positive integer value between min and max.</documentation>
+            <input message="tns:getRandomIntIn"/>
+            <output message="tns:getRandomIntOut"/>
+        </operation>
+        <operation name="getVersion">
+            <documentation>Get the current version number.</documentation>
+            <input message="tns:getVersionIn"/>
+            <output message="tns:getVersionOut"/>
+        </operation>
+        <operation name="reverseString">
+            <documentation>Reverses the given string input.</documentation>
+            <input message="tns:reverseStringIn"/>
+            <output message="tns:reverseStringOut"/>
+        </operation>
+    </portType>
+    <binding name="DemoServiceBinding" type="tns:DemoServicePort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getRandomInt">
+            <soap:operation soapAction="http://ws.expressive2.local/demo/v1/#getRandomInt"/>
+            <input>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://ws.expressive2.local/demo/v1/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://ws.expressive2.local/demo/v1/"/>
+            </output>
+        </operation>
+        <operation name="getVersion">
+            <soap:operation soapAction="http://ws.expressive2.local/demo/v1/#getVersion"/>
+            <input>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://ws.expressive2.local/demo/v1/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://ws.expressive2.local/demo/v1/"/>
+            </output>
+        </operation>
+        <operation name="reverseString">
+            <soap:operation soapAction="http://ws.expressive2.local/demo/v1/#reverseString"/>
+            <input>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://ws.expressive2.local/demo/v1/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://ws.expressive2.local/demo/v1/"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="DemoServiceService">
+        <port name="DemoServicePort" binding="tns:DemoServiceBinding">
+            <soap:address location="http://ws.expressive2.local/demo/v1/"/>
+        </port>
+    </service>
+    <message name="getRandomIntIn">
+        <part name="min" type="xsd:int"/>
+        <part name="max" type="xsd:int"/>
+    </message>
+    <message name="getRandomIntOut">
+        <part name="return" type="xsd:int"/>
+    </message>
+    <message name="getVersionIn"/>
+    <message name="getVersionOut">
+        <part name="return" type="xsd:string"/>
+    </message>
+    <message name="reverseStringIn">
+        <part name="input" type="xsd:string"/>
+    </message>
+    <message name="reverseStringOut">
+        <part name="return" type="xsd:string"/>
+    </message>
+</definitions>
