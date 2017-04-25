@@ -38,8 +38,8 @@ class ConfigProvider
     }
 }
 ```
-It responds to either http `GET` or `POST` request methods. Other request methods will be ignored and delegated to the
-next callable middleware, if available.
+It responds to either http `GET` or `POST` request methods. Requests using different methods will be ignored and
+delegated to the next callable middleware, if available.
 
 In case an http request with method `GET` is received, the component creates and delivers the description in html
 format.
@@ -47,10 +47,10 @@ format.
 Http requests with method `POST` will be treated as calls to the webservice itself, but will only be handled,
 if invocation is allowed by the `enable_invocation` flag.
 
-If the flag `enable_invocation` is set to `true` in addition to the description a form gets presented with which you can
-input and directly call the webservice with parameters. You can choose to retrieve the raw xml response to your request
-or otherwise get a full listing of the request (http headers and soap message in xml) and response (http headers and soap
-response in xml).
+If the `enable_invocation` flag is set to `true` an additional form will be rendered next to the method description. It
+allows you to call and test the webservice method directly by sending an http post request. You can optionally input
+values for all parameters expected by the webservice method. The response to this request can either be raw xml or a
+page showing request headers, request message, response headers and response message.
 
 To make the description available, you have to register a route to the application which delegates the call to describe
 the webservice to the soap description component, for example:

@@ -1,8 +1,8 @@
 # Soap controller component
 The soap controller component handles http requests to interact with your webservice based on the soap protocol.
 
-It responds to either http `GET` or `POST` request methods. Other request methods will be ignored by the soap controller
-component and are delegated to the next callable middleware, if available.
+It responds to either http `GET` or `POST` request methods. Requests using different methods will be ignored and
+delegated to the next callable middleware, if available.
 
 In case an http request with method `GET` is received, the controller creates and delivers a wsdl documentation of your
 webservice in xml format.
