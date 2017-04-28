@@ -15,6 +15,11 @@ class ReflectorTest extends TestCase
      */
     protected $reflector;
 
+    /**
+     * @var ServiceDescription
+     */
+    protected $description;
+
     protected function setUp()
     {
         parent::setUp();
@@ -26,6 +31,28 @@ class ReflectorTest extends TestCase
     public function testReflectionCreatingAServiceDescriptionWorks()
     {
         $this->assertInstanceOf(ServiceDescription::class, $this->description);
+
+        $this->assertEquals(
+            $this->description->getFullyQualifiedClassName(),
+            TestService::class
+        );
+
+        $class = basename(TestService::class);
+
+        $this->assertEquals(
+            $this->description->getClassName(),
+            $class
+        );
+
+        $this->assertEquals(
+            $this->description->getClassDescription(),
+            'This service is built to demonstrate how to easily setup a webservice based on zend-expressive 2.0.'
+        );
+
+        $this->assertContains(
+            $class . '.php',
+            $this->description->getFileName()
+        );
     }
 
     /**
