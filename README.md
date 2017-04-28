@@ -1,6 +1,10 @@
 # expressive-soap-middleware
 Middleware for handling soap webservice requests based on zend expressive 2.0.
 
+[![Build Status](https://travis-ci.org/dwendrich/expressive-soap-middleware.svg?branch=master)](https://travis-ci.org/dwendrich/expressive-soap-middleware)
+[![Coverage Status](https://img.shields.io/codecov/c/github/dwendrich/expressive-soap-middleware.svg?style=flat)](https://codecov.io/gh/dwendrich/expressive-soap-middleware)
+[![Latest Stable Version](http://img.shields.io/packagist/v/dwendrich/expressive-soap-middleware.svg?style=flat)](https://packagist.org/packages/dwendrich/expressive-soap-middleware)
+
 ## Requirements
 * PHP 7.0 or above
 * [zend expressive 2.0](https://docs.zendframework.com/zend-expressive/)
