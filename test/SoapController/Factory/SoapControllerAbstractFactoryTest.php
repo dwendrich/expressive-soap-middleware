@@ -66,8 +66,26 @@ class SoapControllerAbstractFactoryTest extends TestCase
         $this->assertSame($bool, $expected);
     }
 
-    public function testCreateSoapControllerInstance()
+    public function testCreateSoapControllerInstanceWithServiceClassName()
     {
+        $abstractFactory = new SoapControllerAbstractFactory();
+
+        /** @var SoapController $soapController */
+        $soapController = $abstractFactory->__invoke(
+            $this->container->reveal(),
+            'TestService\SoapController'
+        );
+
+        $this->assertInstanceOf(SoapController::class, $soapController);
+    }
+
+    public function testCreateSoapControllerInstanceWithServiceObject()
+    {
+        $this->container->has('SoapMiddlewareTest\fixtures\TestService')->willReturn(true);
+        $this->container->get('SoapMiddlewareTest\fixtures\TestService')->willReturn(
+            new TestService()
+        );
+
         $abstractFactory = new SoapControllerAbstractFactory();
 
         /** @var SoapController $soapController */
