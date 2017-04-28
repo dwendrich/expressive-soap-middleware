@@ -37,7 +37,10 @@ class ReflectorTest extends TestCase
             TestService::class
         );
 
-        $class = basename(TestService::class);
+        $class = substr(
+            TestService::class,
+            strrpos(TestService::class, '\\') + 1
+        );
 
         $this->assertEquals(
             $this->description->getClassName(),
