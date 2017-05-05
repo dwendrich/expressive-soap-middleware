@@ -71,7 +71,7 @@ class SoapDescriptionAbstractFactoryTest extends TestCase
         $this->assertSame($bool, $expected);
     }
 
-    public function testCreateSoapDescriptionInstance()
+    public function testCreateSoapDescriptionInstanceWithoutTemplateRendererInstance()
     {
         $abstractFactory = new SoapDescriptionAbstractFactory();
 
@@ -85,6 +85,42 @@ class SoapDescriptionAbstractFactoryTest extends TestCase
         $_SERVER['HTTP_HOST'] = 'test.local';
 
         $this->container->has(TemplateRendererInterface::class)->willReturn(false);
+
+        $serviceDescription = $this->prophesize(ServiceDescription::class);
+        $serviceReflector = $this->prophesize(ServiceReflectorInterface::class);
+        $serviceReflector->getServiceDescription(Argument::any())->willReturn(
+            $serviceDescription->reveal()
+        );
+        $this->container->get(ServiceReflectorInterface::class)->willReturn(
+            $serviceReflector->reveal()
+        );
+
+        /** @var SoapDescription $soapDescription */
+        $soapDescription = $abstractFactory->__invoke(
+            $this->container->reveal(),
+            'TestService\SoapDescription'
+        );
+
+        $this->assertInstanceOf(SoapDescription::class, $soapDescription);
+    }
+
+    public function testCreateSoapDescriptionInstanceWithTemplateRendererInstance()
+    {
+        $abstractFactory = new SoapDescriptionAbstractFactory();
+
+        $urlHelper = $this->prophesize(UrlHelper::class);
+        $urlHelper->generate(Argument::any())->willReturn('test');
+        $this->container->get(UrlHelper::class)->willReturn(
+            $urlHelper->reveal()
+        );
+
+        // provide HTTP_HOST for testing purpose
+        $_SERVER['HTTP_HOST'] = 'test.local';
+
+        $this->container->has(TemplateRendererInterface::class)->willReturn(true);
+        $this->container->get(TemplateRendererInterface::class)->willReturn(
+            $this->prophesize(TemplateRendererInterface::class)->reveal()
+        );
 
         $serviceDescription = $this->prophesize(ServiceDescription::class);
         $serviceReflector = $this->prophesize(ServiceReflectorInterface::class);

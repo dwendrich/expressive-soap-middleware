@@ -117,6 +117,34 @@ class SoapDescriptionTest extends TestCase
         $this->assertInstanceOf(XmlResponse::class, $response);
     }
 
+    public function testPostRequestThrowsSoapFault()
+    {
+        $middleware = new SoapDescription(
+            $this->clientMock,
+            $this->serviceReflection->reveal(),
+            true,
+            $this->renderer->reveal()
+        );
+
+        $this->clientMock
+            ->method('getVersion')
+            ->will(
+                $this->throwException(
+                    new \SoapFault('server', 'ThrowingSoapFaultTest')
+                )
+            );
+
+        $this->request = $this->request
+            ->withMethod('POST')
+            ->withParsedBody([
+                'method' => 'getVersion',
+                'output_xml' => true
+            ]);
+
+        $response = $middleware->process($this->request, $this->delegate->reveal());
+        $this->assertInstanceOf(XmlResponse::class, $response);
+    }
+
     public function testRequestMethodPostButInvocationNotAllowedReturnsResponseWithStatus403()
     {
         $middleware = new SoapDescription(
