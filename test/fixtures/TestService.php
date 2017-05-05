@@ -35,6 +35,11 @@ class TestService
         return 'constant string value';
     }
 
+    public function methodWithNullableParam($param = null)
+    {
+
+    }
+
     /**
      * Create a random positive integer value between min and max.
      *

@@ -71,6 +71,7 @@ class ReflectorTest extends TestCase
         $this->assertArrayHasKey('doNothing', $collection);
         $this->assertArrayHasKey('testMethod', $collection);
         $this->assertArrayHasKey('testReturnString', $collection);
+        $this->assertArrayHasKey('methodWithNullableParam', $collection);
 
         $this->assertEquals('int', $collection['getRandomInt']->getReturnType());
         $this->assertEquals('string', $collection['getVersion']->getReturnType());
@@ -78,6 +79,7 @@ class ReflectorTest extends TestCase
         $this->assertEquals('void', $collection['doNothing']->getReturnType());
         $this->assertEquals('void', $collection['testMethod']->getReturnType());
         $this->assertEquals('string', $collection['testReturnString']->getReturnType());
+        $this->assertEquals('void', $collection['methodWithNullableParam']->getReturnType());
 
         $this->assertEquals('', $collection['getRandomInt']->getReturnTypeDescription());
         $this->assertEquals('Returns the current version number as string.', $collection['getVersion']->getReturnTypeDescription());
@@ -85,6 +87,7 @@ class ReflectorTest extends TestCase
         $this->assertEmpty($collection['doNothing']->getReturnTypeDescription());
         $this->assertEmpty($collection['testMethod']->getReturnTypeDescription());
         $this->assertEmpty($collection['testReturnString']->getReturnTypeDescription());
+        $this->assertEmpty($collection['methodWithNullableParam']->getReturnTypeDescription());
 
         $this->assertEquals('Create a random positive integer value between min and max.', $collection['getRandomInt']->getDescription());
         $this->assertEquals('Get the current version number.', $collection['getVersion']->getDescription());
@@ -92,6 +95,7 @@ class ReflectorTest extends TestCase
         $this->assertEquals('', $collection['doNothing']->getDescription());
         $this->assertEquals('', $collection['testMethod']->getDescription());
         $this->assertEquals('', $collection['testReturnString']->getDescription());
+        $this->assertEquals('', $collection['methodWithNullableParam']->getDescription());
 
         return $collection;
     }
