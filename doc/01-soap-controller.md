@@ -32,6 +32,12 @@ class ConfigProvider
     
                     // provide optional soap server options
                     'server_options' => [],
+                    
+                    // provide optional binding styles
+                    'binding_style' => [
+                        'style' => 'document',
+                        'transport' => 'http://framework.zend.com'
+                    ]
                 ],
             ],
         ];

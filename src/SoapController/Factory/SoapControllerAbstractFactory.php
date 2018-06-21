@@ -70,6 +70,9 @@ class SoapControllerAbstractFactory implements AbstractFactoryInterface
         // retrieve optional server options array
         $serverOptions = isset($config['server_options']) ? (array)$config['server_options'] : [];
 
+        // retrieve optional binding option
+        $bindingStyle = $config['binding_style']?? [];
+
         // create instance of soap server object
         $soapServer = new Server($wsdlUri, $serverOptions);
 
@@ -91,6 +94,7 @@ class SoapControllerAbstractFactory implements AbstractFactoryInterface
         $wsdlGenerator = new AutoDiscover();
         $wsdlGenerator->setUri($wsdlUri);
         $wsdlGenerator->setClass($serviceClass);
+        $wsdlGenerator->setBindingStyle($bindingStyle);
 
         return new SoapController($soapServer, $wsdlGenerator);
     }
